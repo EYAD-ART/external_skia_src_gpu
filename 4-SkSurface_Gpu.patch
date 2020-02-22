@@ -1,0 +1,24 @@
+diff --git a/src/image/SkSurface_Gpu.cpp b/src/image/SkSurface_Gpu.cpp
+index 5a2a12d..cd34000 100644
+--- a/src/image/SkSurface_Gpu.cpp
++++ b/src/image/SkSurface_Gpu.cpp
+@@ -617,14 +617,15 @@
+ 
+     if (isTextureable) {
+         GrAHardwareBufferUtils::DeleteImageProc deleteImageProc = nullptr;
+-        GrAHardwareBufferUtils::DeleteImageCtx deleteImageCtx = nullptr;
++        GrAHardwareBufferUtils::UpdateImageProc updateImageProc = nullptr;
++        GrAHardwareBufferUtils::TexImageCtx deleteImageCtx = nullptr;
+ 
+         GrBackendTexture backendTexture =
+                 GrAHardwareBufferUtils::MakeBackendTexture(context, hardwareBuffer,
+                                                            bufferDesc.width, bufferDesc.height,
+-                                                           &deleteImageProc, &deleteImageCtx,
+-                                                           isProtectedContent, backendFormat,
+-                                                           true);
++                                                           &deleteImageProc, &updateImageProc,
++                                                           &deleteImageCtx, isProtectedContent,
++                                                           backendFormat, true);
+         if (!backendTexture.isValid()) {
+             return nullptr;
+         }
